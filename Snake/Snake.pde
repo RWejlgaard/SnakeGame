@@ -1,14 +1,21 @@
-int pposX = 1;
-int pposY = 1;
+int pposX;
+int pposY;
 boolean shouldBeDead = false;
 color black = color(0,0,0);
 int orientation;
-
-void setup(){
+int cellSize = 4;
+public void setup(){
   size(500,500);
   background(255);
-  noStroke();
-  frameRate(120);
+  //noStroke();
+  frameRate(59);
+  pposX = width / 2;
+  pposY = height / 2;
+  int numCellsX = width / cellSize;
+  int numCellsY = height / cellSize;
+  int[] cellsX = new int[numCellsX];
+  int[] cellsY = new int[numCellsY];
+  
 }
 
 void draw(){
@@ -16,8 +23,13 @@ void draw(){
   if(shouldBeDead){
     key = 'q';
     println("YOU DIED!");
-    
+    if(keyPressed){
+      setup();
+      shouldBeDead = false;
+    }
   }
+  
+  drawGrid();
   
   switch(key){
     case 'w':
@@ -54,6 +66,18 @@ void drawPlayer(int pposX, int pposY){
     shouldBeDead = true;
   }else if (pposY > height || pposY < 1){
     shouldBeDead = true;
+  }
+}
+
+void drawGrid(){
+  
+  //cellsX[1] = 42;
+  fill(255);
+  for (int iX = cellSize/2; iX < width-5; iX+=cellSize){
+    for (int iY = cellSize/2; iY < height-5; iY+=cellSize){
+      rect(iX, iY,cellSize,cellSize);
+  }
+    rect(iX, cellSize/2,cellSize,cellSize);
   }
 }
 
